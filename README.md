@@ -89,7 +89,7 @@ Zsh
 ```zsh
 $ python -m venv venv
 $ source ./venv/bin/activate
-$ pip install -r ./server/requirements.txt
+$ pip install -r server/requirements.txt
 ```
 
 To start your own Rest-app we use the django framework to kick things off.
@@ -135,8 +135,7 @@ Primary-key will be automatically created, so no need to define one if nothing s
 between the two tables.
 If you have an Appointment object you can access the responding Patient object though the
 attribute `appointment1.patient`.
-Since we also defined `related_name=appointments` we can further access all responding Appointment object`
-with `patient1.appointments`
+Since we also defined `related_name=appointments` we can further access all responding Appointment object`with`patient1.appointments`
 
 More infos https://docs.djangoproject.com/en/5.0/topics/db/models/
 
@@ -499,7 +498,7 @@ $ docker compose down
 
 Docker builds/downloads three images.
 
-- 'django_proxy' which serves static files (i.e. _.css, _.js) files and routes requests to 'django_server'.
+- 'django*proxy' which serves static files (i.e. *.css, \_.js) files and routes requests to 'django_server'.
 - 'django_server' runs your django app with a gunicorn wsgi.
 - 'postgres' runs the postgres dbms for 'django_server' to access
 
@@ -548,3 +547,48 @@ local     django_web_template_db-data
 local     django_web_template_media_volume
 local     django_web_template_static_volume
 ```
+
+## Troubleshooting
+
+### psycopg2/psycopg2-binary Installation Issues
+
+If you encounter issues installing psycopg2-binary, try one of these solutions:
+
+1. Install system dependencies for psycopg2:
+
+   - **Ubuntu/Debian**: `sudo apt-get install python3-dev libpq-dev`
+   - **CentOS/RHEL**: `sudo yum install python3-devel postgresql-devel`
+   - **macOS**: `brew install postgresql`
+
+2. Use psycopg2 instead of psycopg2-binary:
+
+   - Replace psycopg2-binary with psycopg2 in requirements.txt
+   - This requires the PostgreSQL development libraries to be installed
+
+3. Try an earlier version of psycopg2-binary (e.g., 2.9.5)
+
+4. For macOS with M1/M2 chips, you might need to set environment variables:
+   ```bash
+   export LDFLAGS="-L/opt/homebrew/opt/openssl@1.1/lib -L/opt/homebrew/opt/libpq/lib"
+   export CPPFLAGS="-I/opt/homebrew/opt/openssl@1.1/include -I/opt/homebrew/opt/libpq/include"
+   ```
+
+### Django Migration Issues
+
+If you encounter migration issues:
+
+1. Reset your migrations (for development only):
+
+   ```bash
+   find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+   find . -path "*/migrations/*.pyc" -delete
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+2. If using Docker, you might need to rebuild:
+   ```bash
+   docker compose down -v  # Remove volumes
+   docker compose build --no-cache
+   docker compose up -d
+   ```

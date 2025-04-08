@@ -3,5 +3,11 @@ djangorestframework==3.14.0
 djangorestframework-simplejwt==5.3.1
 django-environ==0.11.2
 gunicorn==21.2.0
-psycopg2-binary==2.9.9
+# Replace psycopg2-binary with psycopg2 or use an earlier version
+# Option 1: Use psycopg2 instead
+#psycopg2==2.9.9
+# Option 2: Use an earlier version of psycopg2-binary
+# psycopg2-binary==2.9.5
+# If you're on macOS, you might need these build dependencies:
+# brew install postgresql
 drf_yasg==1.21.7
