@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{% block title %}Accounts{% endblock %}</title>
+  </head>
+  <body>
+    <header>
+      <!-- Nav or brand info -->
+      <nav>
+        <a href="{% url 'accounts:dashboard' %}">Dashboard</a> |
+        <a href="{% url 'accounts:logout' %}">Logout</a>
+      </nav>
+    </header>
+    <div class="content">{% block content %}{% endblock %}</div>
+  </body>
+</html>
