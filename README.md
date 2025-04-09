@@ -394,6 +394,13 @@ $ python manage.py runserver
 We can check if everything is running. http://localhost:8000/admin
 Congrats!!
 
+Migrate the database to get the default authentication tables plus your UserProfile table:
+
+```shell
+python manage.py makemigrations
+python manage.py migrate
+```
+
 ### Docker deployment
 
 Install docker https://docs.docker.com/engine/install/.
