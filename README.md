@@ -350,6 +350,12 @@ Lets jump into the './server' path, where the actual django code is stored.
 $ cd ./server
 ```
 
+Install postgresql (for mac)
+
+```shell
+$ brew install postgresql
+```
+
 Install requirements
 
 ```shell
