@@ -80,23 +80,20 @@ Create and venv installed the requirements.
 
 ```shell
 $ python -m venv venv
+
+# Windows
 $ source ./venv/Scripts/activate
-$ pip install -r ./server/requirements.txt
-```
-
-Zsh
-
-```zsh
-$ python -m venv venv
+# Linux / MacOS
 $ source ./venv/bin/activate
-$ pip install -r server/requirements.txt
+
+$ pip install -r ./server/requirements.txt
 ```
 
 To start your own Rest-app we use the django framework to kick things off.
 
 ```shell
 $ cd ./server
-$ python manage.py startapp appointment
+$ python manage.py startapp accounts
 ```
 
 this will create a new package with all the necessary files.
@@ -342,6 +339,14 @@ Create venv
 ```shell
 $ python -m venv venv
 $ source ./venv/Scripts/activate
+
+# Windows
+$ source ./venv/Scripts/activate
+# Linux / MacOS
+$ source ./venv/bin/activate
+
+$ pip install -r ./server/requirements.txt
+
 ```
 
 Lets jump into the './server' path, where the actual django code is stored.
@@ -380,10 +385,11 @@ And create a admin user
 
 ```shell
 $ python manage.py createsuperuser
+
 Username (leave blank to use 'amazing.user'): admin
 Email address: test@test.ch
-Password:
-Password (again):
+Password: password
+Password (again): password
 This password is too short. It must contain at least 8 characters.
 This password is too common.
 This password is entirely numeric.

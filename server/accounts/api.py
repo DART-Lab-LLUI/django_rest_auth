@@ -19,6 +19,7 @@ def api_login(request):
     password = request.data.get('password')
 
     user = authenticate(username=username, password=password)
+    # print(f"User: {user}")
     if user:
         # to do: generate a JWT or token here
         update_last_login(None, user)
