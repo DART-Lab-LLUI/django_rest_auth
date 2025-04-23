@@ -38,12 +38,4 @@ def dashboard_view(request):
     """
     return HttpResponse(f"Hello, {request.user.username}. Your role is: {request.user.profile.role}.")
 
-def microsoft_entra_login(request):
-    """
-    Stub for Microsoft Entra (Azure AD) login flow.
-    In a real project, you would integrate with an OIDC library or
-    handle the Azure login redirect/callback logic here.
-    """
-    # Example of where you might redirect to Azure’s auth endpoint
-    # Or parse an incoming token
-    return HttpResponse("This is a stub for Microsoft Entra login.")
+
