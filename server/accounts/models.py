@@ -4,15 +4,16 @@ from django.contrib.auth.models import User
 # Django’s built-in User model. User profile extension for roles:
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
-    # But you could also just rely on Django groups/permissions
     # Roles definition
     ROLE_CHOICES = (
-        ('owner', 'Owner'),
+        ('superadmin', 'SuperAdmin'),
         ('admin', 'Admin'),
-        ('ispeak', 'iSpeak'),
-        ('iarat', 'iArat'),
+        ('doctor', 'Doctor'),
+        ('therapist', 'Therapist'),
+        ('patient', 'Patient'),
+        ('user', 'User'),
     )
-    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='admin')
+    role = models.CharField(max_length=50, choices=ROLE_CHOICES, default='user')
 
     def __str__(self):
         return f"{self.user.username} - {self.role}"
