@@ -37,6 +37,7 @@ def api_register(request):
     Register a new user.
     Expects username, email, password, and any additional fields defined in the serializer.
     """
+    print(f"Registering user with data: {request.data}")
     serializer = UserRegistrationSerializer(data=request.data)
     if serializer.is_valid():
         with transaction.atomic():

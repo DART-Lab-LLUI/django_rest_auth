@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from . import api
+from accounts import api
 
 app_name = 'accounts'
 
@@ -14,5 +14,5 @@ urlpatterns = [
     # REST API endpoints
     path('api/login/', api.api_login, name='api_login'),
     path('api/register/', api.api_register, name='api_register'),
-    path('api/protected/', api.api_protected_data, name='api_protected'),
+    path('api/protected/', api.api_protected_data, name='api_protected_data'),
 ]
