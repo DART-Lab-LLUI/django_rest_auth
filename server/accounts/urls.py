@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from accounts import api
+from .api import api_login, api_register, api_protected_data, api_logout
 
 app_name = 'accounts'
 
@@ -15,4 +16,5 @@ urlpatterns = [
     path('api/login/', api.api_login, name='api_login'),
     path('api/register/', api.api_register, name='api_register'),
     path('api/protected/', api.api_protected_data, name='api_protected_data'),
+    path('api/logout/', api_logout, name='api_logout'),  # Add this new route
 ]
