@@ -1,4 +1,15 @@
 from rest_framework.permissions import BasePermission
+    
+ 
+#  Roles definition
+#    ROLE_CHOICES = (
+#         ('superadmin', 'SuperAdmin'),
+#         ('admin', 'Admin'),
+#          ('doctor', 'Doctor'),
+#         ('therapist', 'Therapist'),
+#         ('patient', 'Patient'),
+#         ('user', 'User'),
+#     )
 
 
 class IsDoctor(BasePermission):
@@ -7,4 +18,4 @@ class IsDoctor(BasePermission):
     """
     def has_permission(self, request, view):
         # Check if user is authenticated and in Doctor group
-        return request.user.is_authenticated and request.user.groups.filter(name='Doctor').exists()
+        return request.user.is_authenticated and request.user.groups.filter(name='Doctors').exists()

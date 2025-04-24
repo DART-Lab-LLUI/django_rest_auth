@@ -34,8 +34,7 @@ def logout_view(request):
 def dashboard_view(request):
     """
     A generic dashboard page, accessible only if the user is logged in.
-    You can check roles with request.user.profile.role or user groups.
     """
-    return HttpResponse(f"Hello, {request.user.username}. Your role is: {request.user.profile.role}.")
+    return HttpResponse(f"Hello, {request.user.username}.")
 
 

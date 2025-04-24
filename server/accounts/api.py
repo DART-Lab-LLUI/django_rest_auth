@@ -107,15 +107,6 @@ def api_protected_data(request):
         'email': user.email,
         'info': 'Some protected data here.'
     }
-    
-    # Try to get profile data if it exists
-    try:
-        if hasattr(user, 'profile'):
-            data['role'] = user.profile.role
-    except Exception as e:
-        print(f"Error accessing user profile: {e}")
-        data['role'] = 'unknown'
-    
 
     return Response(data, status=status.HTTP_200_OK)
 
