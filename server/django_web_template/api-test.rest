@@ -1,6 +1,6 @@
 # test.rest
 
-# 1) Test API Login
+# Test API Login
 #    This POST request sends the user's credentials.
 #    If successful, it should return a 200 OK with a JSON response: { "message": "Login successful" }
 POST http://127.0.0.1:8000/accounts/api/login/
@@ -10,9 +10,22 @@ Content-Type: application/json
   "username": "YOUR_TEST_USERNAME",
   "password": "YOUR_TEST_PASSWORD"
 }
+###
+# Test API Register
+#    This POST request sends the user's data.
+#    If successful, it should return a 200 OK with a JSON response
+POST http://127.0.0.1:8000/accounts/api/register/
+Content-Type: application/json
+
+{
+  "username": "aiden",
+  "email": "aiden.pearce@gmail.com",
+  "password": "password",
+  "password_confirm": "password",
+}
 
 ###
-# 2) Test Protected Endpoint
+#  Test Protected Endpoint
 #    This GET request is protected. After a successful login, the session cookie is automatically stored (if rest-client.storeCookies is true).
 #    It should return a 200 OK with some protected data: { "username": ..., "role": ..., "info": ... }
 GET http://127.0.0.1:8000/accounts/api/protected/

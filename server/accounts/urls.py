@@ -10,9 +10,9 @@ urlpatterns = [
     path('login/', views.login_view, name='login'),
     path('logout/', views.logout_view, name='logout'),
     path('dashboard/', views.dashboard_view, name='dashboard'),
-    path('microsoft-entra/', views.microsoft_entra_login, name='microsoft_entra_login'),
 
     # REST API endpoints
     path('api/login/', api.api_login, name='api_login'),
+    path('api/register/', api.api_register, name='api_register'),
     path('api/protected/', api.api_protected_data, name='api_protected'),
 ]
