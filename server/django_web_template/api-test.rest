@@ -29,3 +29,4 @@ Content-Type: application/json
 #    This GET request is protected. After a successful login, the session cookie is automatically stored (if rest-client.storeCookies is true).
 #    It should return a 200 OK with some protected data: { "username": ..., "role": ..., "info": ... }
 GET http://127.0.0.1:8000/accounts/api/protected/
+Authorization: Token eca0047b1cc76b918bd1f547fdd0275d59993481
