@@ -338,15 +338,11 @@ Create venv
 
 ```shell
 $ python -m venv venv
-$ source ./venv/Scripts/activate
 
 # Windows
 $ source ./venv/Scripts/activate
 # Linux / MacOS
 $ source ./venv/bin/activate
-
-$ pip install -r ./server/requirements.txt
-
 ```
 
 Lets jump into the './server' path, where the actual django code is stored.
