@@ -145,12 +145,18 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'accounts.authentication.ExpiringTokenAuthentication',
     ),
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
     "DEFAULT_PERMISSION_CLASSES": ('django_web_template.jwt_extension.permissions.ViewRestrictedDjangoModelPermissions',)
 }
+
+# Configure the token expiration time (default is 7 days if not specified)
+TOKEN_EXPIRATION_TIME = timedelta(days=7)
+
+# Set the custom auth token model
+AUTH_TOKEN_MODEL = 'accounts.ExpiringToken'
+
 
 # JWT
 SIMPLE_JWT = {

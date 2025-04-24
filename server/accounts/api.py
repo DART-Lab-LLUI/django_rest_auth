@@ -8,13 +8,14 @@ from django.db import transaction
 from accounts.serializers import UserRegistrationSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
+from .models import ExpiringToken
 
 # REST api for external application to authenticate
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def api_login(request):
     """
-    REST-based login using DRF with token authentication.
+    REST-based login using DRF with expiring token authentication.
     Returns an auth token that can be used for subsequent requests.
     """
     username = request.data.get('username')
@@ -25,10 +26,27 @@ def api_login(request):
         update_last_login(None, user)
         # Create or get the token for this user
         token, created = Token.objects.get_or_create(user=user)
-        return Response({
+        
+        # Get token creation time - we need to format it properly
+        # Since default Token model doesn't have created field, 
+        # we'll add the current time for newly created tokens
+        from django.utils import timezone
+        token_created = timezone.now() if created else None
+        
+        # Try to access creation timestamp from ExpiringToken if that model is being used
+        if hasattr(token, 'created'):
+            token_created = token.created
+            
+        response_data = {
             'message': 'Login successful',
-            'token': token.key
-        }, status=status.HTTP_200_OK)
+            'token': token.key,
+        }
+        
+        # Add creation time to response if available
+        if token_created:
+            response_data['token_created'] = token_created.isoformat()
+        
+        return Response(response_data, status=status.HTTP_200_OK)
     else:
         return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
 
