@@ -29,7 +29,7 @@ Content-Type: application/json
 #  Test Api logout
 #    This delete the token
 POST http://127.0.0.1:8000/accounts/api/logout/
-Authorization: Token 1ebc021d9cb26bef746e4ad3bc5479ca34ea10a1
+Authorization: Token c73c10b1e7e0988b50593151d26d955459ed3968
 
 ###
 #  Test Protected Endpoint

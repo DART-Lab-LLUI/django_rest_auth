@@ -2,12 +2,13 @@ from rest_framework.decorators import api_view, permission_classes, authenticati
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import update_last_login, User
+from django.contrib.auth.models import update_last_login
 from rest_framework import status
 from django.db import transaction
 from accounts.serializers import UserRegistrationSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
+from .authorization import IsDoctor
 
 ################################# AUTH #######################################
 # 
@@ -86,6 +87,7 @@ def api_logout(request):
     request.user.auth_token.delete()
     return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
 
+
 ################################# PROTECTED API #######################################
 
 
@@ -120,8 +122,11 @@ def api_protected_data(request):
 
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
-#check if user is in the Doctor group, if not not authorized
+@permission_classes([IsAuthenticated, IsDoctor])
 def api_doctor(request):
+    """
+    API endpoint only accessible to authenticated users in the Doctor group.
+    """
     return Response({"message": "Welcome, Doctor!"})
 
 
