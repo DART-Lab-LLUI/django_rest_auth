@@ -9,7 +9,9 @@ from accounts.serializers import UserRegistrationSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
 
-# REST api for external application to authenticate
+################################# AUTH #######################################
+# 
+#  REST api for external application to authenticate
 @api_view(["POST"])
 @permission_classes([AllowAny])
 def api_login(request):
@@ -73,6 +75,20 @@ def api_register(request):
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
+@api_view(["POST"])
+@authentication_classes([TokenAuthentication])
+@permission_classes([IsAuthenticated])
+def api_logout(request):
+    """
+    Endpoint for logging out a user by deleting their auth token.
+    """
+    # Delete the user's token to logout
+    request.user.auth_token.delete()
+    return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
+
+################################# PROTECTED API #######################################
+
+
 @api_view(["GET"])
 @authentication_classes([TokenAuthentication])
 @permission_classes([IsAuthenticated])
@@ -101,24 +117,12 @@ def api_protected_data(request):
 
     return Response(data, status=status.HTTP_200_OK)
 
-@api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_logout(request):
-    """
-    Endpoint for logging out a user by deleting their auth token.
-    """
-    # Delete the user's token to logout
-    request.user.auth_token.delete()
-    return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
 
-@api_view(["POST"])
+@api_view(["GET"])
 @authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
-def api_logout(request):
-    """
-    Endpoint for logging out a user by deleting their auth token.
-    """
-    # Delete the user's token to logout
-    request.user.auth_token.delete()
-    return Response({'message': 'Logout successful'}, status=status.HTTP_200_OK)
+#check if user is in the Doctor group, if not not authorized
+def api_doctor(request):
+    return Response({"message": "Welcome, Doctor!"})
+
+
+
