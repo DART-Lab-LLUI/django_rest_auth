@@ -8,7 +8,6 @@ from django.db import transaction
 from accounts.serializers import UserRegistrationSerializer
 from rest_framework.authtoken.models import Token
 from rest_framework.authentication import TokenAuthentication
-from .models import ExpiringToken
 
 # REST api for external application to authenticate
 @api_view(["POST"])

@@ -24,9 +24,16 @@ Content-Type: application/json
   "password_confirm": "Magdalena0815"
 }
 
+
+###
+#  Test Api logout
+#    This delete the token
+POST http://127.0.0.1:8000/accounts/api/logout/
+Authorization: Token 1ebc021d9cb26bef746e4ad3bc5479ca34ea10a1
+
 ###
 #  Test Protected Endpoint
 #    This GET request is protected. After a successful login, the session cookie is automatically stored (if rest-client.storeCookies is true).
 #    It should return a 200 OK with some protected data: { "username": ..., "role": ..., "info": ... }
 GET http://127.0.0.1:8000/accounts/api/protected/
-Authorization: Token eca0047b1cc76b918bd1f547fdd0275d59993481
+Authorization: Token 1ebc021d9cb26bef746e4ad3bc5479ca34ea10a1
