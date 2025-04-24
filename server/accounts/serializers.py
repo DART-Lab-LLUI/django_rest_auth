@@ -36,7 +36,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         # Remove password_confirm from validated data
         validated_data.pop('password_confirm')
         
-        # Create user with create_user to properly hash the password
+        # Create user with create_user to properly hash the password:
+        # 1) Generate a random salt
+        # 2) Hash the password with PBKDF2 - Django uses PBKDF2 with HMAC-SHA256
+        # PBKDF2 (Password-Based Key Derivation Function 2) applies multiple iterations (default: 390,000+) Each iteration makes brute-force attacks slower
+        # 3) Format the hash - Creates a string encoding the algorithm, iterations, salt, and hash:
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],

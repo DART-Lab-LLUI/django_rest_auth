@@ -7,8 +7,8 @@ POST http://127.0.0.1:8000/accounts/api/login/
 Content-Type: application/json
 
 {
-  "username": "aiden",
-  "password": "okschiacciosoprailbeatchiamaivincecarter"
+  "username": "llui-guest-1",
+  "password": "Magdalena0815"
 }
 ###
 # Test API Register
@@ -18,10 +18,10 @@ POST http://127.0.0.1:8000/accounts/api/register/
 Content-Type: application/json
 
 {
-  "username": "aiden",
-  "email": "aiden.pearce@gmail.com",
-  "password": "okschiacciosoprailbeatchiamaivincecarter",
-  "password_confirm": "okschiacciosoprailbeatchiamaivincecarter"
+  "username": "llui-guest-1",
+  "email": "llui@example.com",
+  "password": "Magdalena0815",
+  "password_confirm": "Magdalena0815"
 }
 
 ###
