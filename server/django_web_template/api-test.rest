@@ -37,3 +37,10 @@ Authorization: Token 1ebc021d9cb26bef746e4ad3bc5479ca34ea10a1
 #    It should return a 200 OK with some protected data: { "username": ..., "role": ..., "info": ... }
 GET http://127.0.0.1:8000/accounts/api/protected/
 Authorization: Token 1ebc021d9cb26bef746e4ad3bc5479ca34ea10a1
+
+###
+#  Test Protected and Role based Endpoint
+#    This GET request is protected and role based
+
+GET http://127.0.0.1:8000/accounts/api/doctor/
+Authorization: Token c73c10b1e7e0988b50593151d26d955459ed3968
