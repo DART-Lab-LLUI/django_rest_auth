@@ -7,8 +7,9 @@ from rest_framework import status
 from django.db import transaction
 from accounts.serializers import UserRegistrationSerializer
 from rest_framework.authtoken.models import Token
-from rest_framework.authentication import TokenAuthentication
+from .authentication import ExpiringTokenAuthentication  # Updated import
 from .authorization import IsDoctor
+from django.utils import timezone
 
 ################################# AUTH #######################################
 # 
@@ -26,27 +27,16 @@ def api_login(request):
     
     if user:
         update_last_login(None, user)
-        # Create or get the token for this user
-        token, created = Token.objects.get_or_create(user=user)
         
-        # Get token creation time - we need to format it properly
-        # Since default Token model doesn't have created field, 
-        # we'll add the current time for newly created tokens
-        from django.utils import timezone
-        token_created = timezone.now() if created else None
-        
-        # Try to access creation timestamp from ExpiringToken if that model is being used
-        if hasattr(token, 'created'):
-            token_created = token.created
+        # Get or create token, but always update the created timestamp for existing tokens
+        token, _ = Token.objects.get_or_create(user=user)
+        # Update token creation time to reset expiration
             
         response_data = {
             'message': 'Login successful',
             'token': token.key,
+            'token_created': token.created.isoformat(),
         }
-        
-        # Add creation time to response if available
-        if token_created:
-            response_data['token_created'] = token_created.isoformat()
         
         return Response(response_data, status=status.HTTP_200_OK)
     else:
@@ -77,8 +67,7 @@ def api_register(request):
 
 
 @api_view(["POST"])
-@authentication_classes([TokenAuthentication])
-@permission_classes([IsAuthenticated])
+@permission_classes([AllowAny])
 def api_logout(request):
     """
     Endpoint for logging out a user by deleting their auth token.
@@ -92,7 +81,7 @@ def api_logout(request):
 
 
 @api_view(["GET"])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([ExpiringTokenAuthentication])  # Updated to use custom authentication
 @permission_classes([IsAuthenticated])
 def api_protected_data(request):
     """
@@ -105,6 +94,7 @@ def api_protected_data(request):
     data = {
         'username': user.username,
         'email': user.email,
+        "token_created": user.auth_token.created.isoformat() if user.auth_token else None,
         'info': 'Some protected data here.'
     }
 
@@ -112,7 +102,7 @@ def api_protected_data(request):
 
 
 @api_view(["GET"])
-@authentication_classes([TokenAuthentication])
+@authentication_classes([ExpiringTokenAuthentication])  # Updated to use custom authentication
 @permission_classes([IsAuthenticated, IsDoctor])
 def api_doctor(request):
     """
